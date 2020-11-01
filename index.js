@@ -4,6 +4,22 @@ const port = 3000;
 const router = express.Router();
 
 const data = require("./Lab3-timetable-data.json");
+let timetableArray = [];
+
+function timetableFunction(){
+    for(i=0; i < timetableArray.length;i++){
+        timetableArray.pop();
+    }
+    for(i=0; i < data.length;i++){
+        timetableArray.push({
+            "subject": data[i].subject,
+            "className": data[i].className,
+            "catalog_nbr": data[i].catalog_nbr,
+            "course_info": data[i].course_info
+        });
+    }
+}
+timetableFunction();
 
 //Setup serving front-end code
 app.use('/', express.static('static'));
@@ -14,16 +30,51 @@ app.use((req,res,next) => { //for all routes
     next();
 });
 
+//Get all available subject codes and descriptions
 router.get('/', (req,res) => {
-    let timetableArray = [];
-    for(i=0; i < data.length;i++){
-        timetableArray.push({
-            "subject": data[i].subject,
-            "className": data[i].className
-        });
-    }
     res.send(timetableArray);
 });
+
+//Get a course(s) via subject code
+router.get('/:subject_Code', (req,res) => { 
+    const subject = req.params.subject_Code;
+    
+    const courseArray = [];
+
+    for(i=0;i<timetableArray.length;i++){
+        if(timetableArray[i].subject === subject){
+            courseArray.push(timetableArray[i].catalog_nbr);
+        }
+    }
+    if(courseArray.length > 0){
+        console.log(`Subject: ${subject} Course(s): ${courseArray}`);
+        res.send(courseArray); 
+    }
+    else{
+        res.status(404).send(`Subject code ${subject} was NOT found`);
+    }
+});
+
+//Get a course via subject code + course code 
+router.get('/:subject_Code/:course_Code', (req,res) => {
+    const subject = req.params.subject_Code;
+    const course = req.params.course_Code;
+    const courseArray = [];
+
+    for(i=0;i<timetableArray.length;i++){
+        if(timetableArray[i].subject === subject && timetableArray[i].catalog_nbr === course){
+            courseArray.push(timetableArray[i]);
+        }
+    }
+    if(courseArray.length > 0){
+        res.send(courseArray); 
+    }
+    else{
+        res.status(404).send(`Subject code ${subject} was NOT found`);
+    }
+});
+
+
 
 //Install the router at /api/courses
 app.use('/api/courses', router);
