@@ -70,7 +70,7 @@ router.get('/:subject_Code/:course_Code', (req,res) => {
         res.send(courseArray); 
     }
     else{
-        res.status(404).send(`Subject code ${subject} was NOT found`);
+        res.status(404).send(`Subject code ${subject} or ${course} was NOT found`);
     }
 });
 
@@ -90,7 +90,7 @@ router.get('/:subject_Code/:course_Code/:course_Component', (req,res) => {
         res.send(courseArray); 
     }
     else{
-        res.status(404).send(`Subject code ${subject} was NOT found`);
+        res.status(404).send(`Subject code ${subject} or ${course} or ${component} was NOT found`);
     }
 });
 
