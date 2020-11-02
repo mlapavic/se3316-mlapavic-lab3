@@ -43,7 +43,7 @@ router.get('/:subject_Code', (req,res) => {
 
     for(i=0;i<timetableArray.length;i++){
         if(timetableArray[i].subject === subject){
-            courseArray.push(timetableArray[i].catalog_nbr);
+            courseArray.push(timetableArray[i]);
         }
     }
     if(courseArray.length > 0){

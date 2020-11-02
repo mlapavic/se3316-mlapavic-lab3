@@ -13,18 +13,35 @@ function getTimetables(){
     console.log(courseInput);
     console.log(componentInput);
 
-    fetch(`/api/courses/${subjectInput}/${courseInput}/${componentInput}`)
-    .then(res => res.json()
-    .then(data => {
-        console.log(data);
-        const l = document.getElementById('timetables');
-        data.forEach(e => {
-            const item = document.createElement('li');
-            item.appendChild(document.createTextNode(`${e.subject} ${e.catalog_nbr} ${e.className} 
-            ${e.course_info[0].ssr_component} ${e.course_info[0].start_time} ${e.course_info[0].end_time}
-            ${e.course_info[0].days}`));
-            l.appendChild(item);
-        });
-    }));
+
+    if(courseInput == "" && componentInput == ""){
+        fetch(`/api/courses/${subjectInput}`)
+        .then(res => res.json()
+        .then(data => {
+            console.log(data);
+            const l = document.getElementById('timetables');
+            data.forEach(e => {
+                const item = document.createElement('li');
+                item.appendChild(document.createTextNode(`${e.subject} ${e.catalog_nbr} ${e.className} 
+                ${e.course_info[0].ssr_component} ${e.course_info[0].start_time} ${e.course_info[0].end_time}
+                ${e.course_info[0].days}`));
+                l.appendChild(item);
+            });
+        }));
+    }else{
+        fetch(`/api/courses/${subjectInput}/${courseInput}/${componentInput}`)
+        .then(res => res.json()
+        .then(data => {
+            console.log(data);
+            const l = document.getElementById('timetables');
+            data.forEach(e => {
+                const item = document.createElement('li');
+                item.appendChild(document.createTextNode(`${e.subject} ${e.catalog_nbr} ${e.className} 
+                ${e.course_info[0].ssr_component} ${e.course_info[0].start_time} ${e.course_info[0].end_time}
+                ${e.course_info[0].days}`));
+                l.appendChild(item);
+            });
+        }));
+    }  
 }
 
