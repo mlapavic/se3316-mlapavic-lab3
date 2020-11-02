@@ -74,7 +74,25 @@ router.get('/:subject_Code/:course_Code', (req,res) => {
     }
 });
 
-
+//Get a course via subject code + course code + component
+router.get('/:subject_Code/:course_Code/:course_Component', (req,res) => {
+    const subject = req.params.subject_Code;
+    const course = req.params.course_Code;
+    const component = req.params.course_Component;
+    const courseArray = [];
+    console.log(component);
+    for(i=0;i<timetableArray.length;i++){
+        if(timetableArray[i].subject === subject && timetableArray[i].catalog_nbr === course && timetableArray[i].course_info[0].ssr_component === component){
+            courseArray.push(timetableArray[i]);
+        }
+    }
+    if(courseArray.length > 0){
+        res.send(courseArray); 
+    }
+    else{
+        res.status(404).send(`Subject code ${subject} was NOT found`);
+    }
+});
 
 //Install the router at /api/courses
 app.use('/api/courses', router);

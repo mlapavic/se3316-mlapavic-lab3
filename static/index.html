@@ -8,8 +8,14 @@
         <body>
             <h1>Timetable Creator</h1>
             <div class="intro">
-                <h2> Courses & Descriptions <button id="get-inventory">Reload</button></h2>
-                <ol id="courses"></ol>
+                <h2> Courses & Descriptions </h2>
+                <span>
+                    Subject Code: <input type="text" id="subject_code">
+                    Course Code: <input type="text" id="course_code">
+                    Component: <input type="text" id="component">
+                    <button id="get-timetable">Reload</button>
+                </span>
+                <ol id="timetables"></ol>
             </div>
             <script defer src="app.js"></script>
         </body>
