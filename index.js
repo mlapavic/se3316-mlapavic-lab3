@@ -2,9 +2,14 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const router = express.Router();
+const router1 = express.Router();
 
 const data = require("./Lab3-timetable-data.json");
 let timetableArray = [];
+const schedules = [];
+
+//Parse data in body as JSON
+router1.use(express.json());
 
 function timetableFunction(){
     for(i=0; i < timetableArray.length;i++){
@@ -40,14 +45,15 @@ router.get('/:subject_Code', (req,res) => {
     const subject = req.params.subject_Code;
     
     const courseArray = [];
-
+    const array1 = [];
     for(i=0;i<timetableArray.length;i++){
         if(timetableArray[i].subject === subject){
             courseArray.push(timetableArray[i]);
+            array1.push(timetableArray[i].catalog_nbr);
         }
     }
     if(courseArray.length > 0){
-        console.log(`Subject: ${subject} Course(s): ${courseArray}`);
+        console.log(`Subject: ${subject} Course(s): ${array1}`);
         res.send(courseArray); 
     }
     else{
@@ -94,8 +100,23 @@ router.get('/:subject_Code/:course_Code/:course_Component', (req,res) => {
     }
 });
 
+ /*router1.put('/:schedules', (req,res) => {
+    const newSchedule = req.body;
+    console.log("Schedule: ", newSchedule);
+    //Add name
+    newSchedule.name = (req.params.name).toString();
+    const schedule = schedules.findIndex(s => s.name === (newSchedule.name).toString());
+    if(schedule < 0){
+        console.log('Creating new schedule');
+        schedules.push(newSchedule);
+    }
+ });
+ */
+   
 //Install the router at /api/courses
 app.use('/api/courses', router);
+
+app.use('/api/schedule', router1);
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
