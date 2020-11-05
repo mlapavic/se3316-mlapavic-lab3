@@ -19,10 +19,45 @@
             </div>
 
             <div class="intro">
-                <h2> Schedule Creation</h2>
+                <h2> Schedule Creation & Course Adding</h2>
                 <span>
+                    Create Schedule: Schedule Name: <input type="text" id="scheduleN">
+                    <button id="create-schedule">Create</button>
+                </span>        
+                <div>
+                    -
+                </div>  
+                <div>
                     
+                    Add To Schedule: Schedule Name: <input type="text" id="scheduleN">
+                    Subject Code: <input type="text" id="subject_code1">
+                    Course Code: <input type="text" id="course_code1">
+                    <button id="add-course">Add</button>
+                </div>
+            </div>
+
+            <div class="intro">
+                <h2> Schedule Deletion</h2>
+                <span>
+                    Delete Schedule: Schedule Name: <input type="text" id="scheduleN">
+                    <button id="delete-schedule">Delete</button>
                 </span>
+                <div>
+                    -
+                </div>  
+                <div>     
+                    DELETE ALL: <button id="delete-all">DELETE ALL</button>
+                </div>
+
+            </div>
+
+            <div class="intro">
+                <h2> Current Schedule</h2>
+                <span>
+                    DISPLAY SCHEDULE: Schedule Name <input type="text" id="scheduleN">
+                    <button id="display-schedule">Delete</button>
+                </span>
+                <ol id="scheduleView"></ol>
             </div>
             <script defer src="app.js"></script>
         </body>
