@@ -58,7 +58,19 @@ function getTimetables(){
 //Schedule Stuff
 
 function createSchedule(){
+    const scheduleInput = document.getElementById("scheduleN").value;
+    
+    var request = new Request(`/api/schedules/${scheduleInput}`, {
+        method: 'POST'
+    });
 
+    fetch(request)
+    .then(res => {
+        // handle response
+        })
+        .catch(err => {
+        // handle errors
+        });
 }
 function addCourse(){
 
