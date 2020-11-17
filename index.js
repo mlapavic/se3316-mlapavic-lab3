@@ -1,5 +1,5 @@
 const express = require('express');
-//const cors = require('cors');
+const cors = require('cors');
 const app = express();
 //const bodyParser = require('body-parser');
 
@@ -46,6 +46,13 @@ timetableFunction();
 
 //Setup serving front-end code
 app.use('/', express.static('static'));
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+    next();
+  });
 
 //Setup middleware to do logging
 app.use((req,res,next) => { //for all routes
@@ -206,6 +213,7 @@ router1.get('/:schedule', (req,res) => {
 
     //Send this response
     res.send("Post Test Complete");
+
  });
  
 
@@ -281,7 +289,8 @@ router1.get('/:schedule', (req,res) => {
 
     console.log(db.get('schedulesDb').value().length);
     for(i=0 ; i < (db.get('schedulesDb').value().length) ;i++){
-        db.get('schedulesDb').pop().write()
+        db.get('schedulesDb').remove().write()
+        //db.get('schedulesDb').pop().write()
     }
 
     res.send("Delete Test Complete");
